@@ -1,7 +1,7 @@
 package com.practice.springsecondphrasepractice.service;
 
-import com.practice.springsecondphrasepractice.controller.dto.request.CreateDate;
-import com.practice.springsecondphrasepractice.controller.dto.request.UpdateDate;
+import com.practice.springsecondphrasepractice.controller.dto.request.Date.CreateDate;
+import com.practice.springsecondphrasepractice.controller.dto.request.Date.UpdateDate;
 import com.practice.springsecondphrasepractice.exception.DataNotFoundException;
 import com.practice.springsecondphrasepractice.exception.ParamInvalidException;
 import com.practice.springsecondphrasepractice.model.Bud;
@@ -36,11 +36,10 @@ public class BudService {
 
     public List<Bud> getDateRange(String startDate, String endDate) throws Exception {
         try {
-            List<Bud> response = this.budRepository.findByBudYmdBetween(startDate, endDate);
+            List<Bud> response = this.budRepository.findByBudYmdBetweenAndBudType(startDate, endDate, "Y");
             if (response.isEmpty()) {
                 throw new DataNotFoundException("資料不存在");
             }
-            response = response.stream().filter(s -> s.getBudType().equals("Y")).collect(Collectors.toList());
             return response;
         } catch (Exception e) {
             if(e instanceof DataNotFoundException){
@@ -68,7 +67,7 @@ public class BudService {
 
     public List<Bud> getYearDate(String year) throws Exception {
         try{
-            List<Bud> response = this.budRepository.findByBudYmdStartingWith(year);
+            List<Bud> response = this.budRepository.findByBudYmdStartingWithAndBudType(year,"Y");
             if (response.isEmpty()) {
                 throw new DataNotFoundException("資料不存在");
             }
@@ -83,15 +82,15 @@ public class BudService {
 
     public Map getBeforeAndAfter(String searchDate) throws Exception {
         try{
-            String budPrevYmd = this.budRepository.getbudPrevYmd(searchDate);
-            String budNextYmd = this.budRepository.getbudNextYmd(searchDate);
+            List<Bud> budPrevYmd = this.budRepository.findByBudYmdLessThanAndBudTypeOrderByBudYmdDesc(searchDate,"Y");
+            List<Bud> budNextYmd = this.budRepository.findByBudYmdGreaterThanAndBudTypeOrderByBudYmdAsc(searchDate,"Y");
             if (budPrevYmd == null || budNextYmd == null) {
                 throw new DataNotFoundException("資料不存在");
             }
             LinkedHashMap response = new LinkedHashMap();
             response.put("budYmd", searchDate);
-            response.put("budPrevYmd", budPrevYmd);
-            response.put("budNextYmd", budNextYmd);
+            response.put("budPrevYmd", budPrevYmd.get(0).getBudYmd());
+            response.put("budNextYmd", budNextYmd.get(0).getBudYmd());
             return response;
         }catch (Exception e){
             if(e instanceof DataNotFoundException){

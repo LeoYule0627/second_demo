@@ -1,8 +1,8 @@
 package com.practice.springsecondphrasepractice.service;
 
-import com.practice.springsecondphrasepractice.controller.dto.request.CreateNfa;
-import com.practice.springsecondphrasepractice.controller.dto.request.DeleteNfa;
-import com.practice.springsecondphrasepractice.controller.dto.request.UpdateNfa;
+import com.practice.springsecondphrasepractice.controller.dto.request.Nfa.CreateNfa;
+import com.practice.springsecondphrasepractice.controller.dto.request.Nfa.DeleteNfa;
+import com.practice.springsecondphrasepractice.controller.dto.request.Nfa.UpdateNfa;
 import com.practice.springsecondphrasepractice.exception.DataNotFoundException;
 import com.practice.springsecondphrasepractice.exception.ParamInvalidException;
 import com.practice.springsecondphrasepractice.model.Nfa;
@@ -10,8 +10,6 @@ import com.practice.springsecondphrasepractice.model.NfaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -126,8 +124,8 @@ public class NfaService {
     }
 
 
-    public Map updateNfa(String nfaUuid, UpdateNfa request) throws Exception{
-        try{
+    public Map updateNfa(String nfaUuid, UpdateNfa request) throws Exception {
+        try {
             Map response = new HashMap<>();
             Nfa updateNfa = this.nfaRepository.findByNfaUuid(nfaUuid);
             if (updateNfa == null) {
@@ -144,19 +142,19 @@ public class NfaService {
             this.nfaRepository.save(updateNfa);
             response.put("message", "異動成功");
             return response;
-        }catch (Exception e){
-            if(e instanceof ParamInvalidException){
+        } catch (Exception e) {
+            if (e instanceof ParamInvalidException) {
                 throw e;
             }
             throw new Exception();
         }
     }
 
-    public Map deleteNfa(String nfaUuid, DeleteNfa request) throws Exception{
-        try{
+    public Map deleteNfa(String nfaUuid, DeleteNfa request) throws Exception {
+        try {
             Map response = new HashMap<>();
             Nfa deleteNfa = this.nfaRepository.findByNfaUuid(nfaUuid);
-            if(deleteNfa == null){
+            if (deleteNfa == null) {
                 List<String> message = new ArrayList<>();
                 message.add("資料不存在");
                 throw new ParamInvalidException(message);
@@ -166,7 +164,7 @@ public class NfaService {
             this.nfaRepository.save(deleteNfa);
             response.put("message", "異動成功");
             return response;
-        }catch (Exception e) {
+        } catch (Exception e) {
             if (e instanceof ParamInvalidException) {
                 throw e;
             }

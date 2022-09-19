@@ -1,8 +1,8 @@
 package com.practice.springsecondphrasepractice.service;
 
-import com.practice.springsecondphrasepractice.controller.dto.request.CreateProd;
-import com.practice.springsecondphrasepractice.controller.dto.request.DeleteProd;
-import com.practice.springsecondphrasepractice.controller.dto.request.UpdateProd;
+import com.practice.springsecondphrasepractice.controller.dto.request.Prod.CreateProd;
+import com.practice.springsecondphrasepractice.controller.dto.request.Prod.DeleteProd;
+import com.practice.springsecondphrasepractice.controller.dto.request.Prod.UpdateProd;
 import com.practice.springsecondphrasepractice.exception.DataNotFoundException;
 import com.practice.springsecondphrasepractice.exception.ParamInvalidException;
 import com.practice.springsecondphrasepractice.model.Prod;

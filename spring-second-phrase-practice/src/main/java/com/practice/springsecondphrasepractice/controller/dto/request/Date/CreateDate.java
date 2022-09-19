@@ -1,4 +1,4 @@
-package com.practice.springsecondphrasepractice.controller.dto.request;
+package com.practice.springsecondphrasepractice.controller.dto.request.Date;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -12,8 +12,11 @@ import javax.validation.constraints.Pattern;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class DeleteNfa {
+public class CreateDate {
+    @NotEmpty
+    @Pattern(regexp = "^[?=\\d]{8}",message = "格式錯誤")
+    private String budYmd;
     @NotEmpty
     @Pattern(regexp = "^[?=N|Y]",message = "格式錯誤")
-    private String enable;
+    private String budType;
 }

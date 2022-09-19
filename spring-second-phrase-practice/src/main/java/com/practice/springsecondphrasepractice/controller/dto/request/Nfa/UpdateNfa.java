@@ -1,4 +1,4 @@
-package com.practice.springsecondphrasepractice.controller.dto.request;
+package com.practice.springsecondphrasepractice.controller.dto.request.Nfa;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -12,7 +12,7 @@ import javax.validation.constraints.Pattern;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class CreateNfa {
+public class UpdateNfa {
     @NotEmpty
     private String subject;
     @NotEmpty

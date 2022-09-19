@@ -1,4 +1,4 @@
-package com.practice.springsecondphrasepractice.controller.dto.request;
+package com.practice.springsecondphrasepractice.controller.dto.request.Date;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -12,10 +12,7 @@ import javax.validation.constraints.Pattern;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class CreateDate {
-    @NotEmpty
-    @Pattern(regexp = "^[?=\\d]{8}",message = "格式錯誤")
-    private String budYmd;
+public class UpdateDate {
     @NotEmpty
     @Pattern(regexp = "^[?=N|Y]",message = "格式錯誤")
     private String budType;

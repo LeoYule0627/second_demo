@@ -1,4 +1,4 @@
-package com.practice.springsecondphrasepractice.controller.dto.request;
+package com.practice.springsecondphrasepractice.controller.dto.request.Prod;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -10,9 +10,15 @@ import javax.validation.constraints.Pattern;
 
 @Getter
 @Setter
-@NoArgsConstructor
 @AllArgsConstructor
-public class UpdateProd {
+@NoArgsConstructor
+public class CreateProd {
+    @NotEmpty
+    @Pattern(regexp = "[?=[A-Z]]{3}" ,message = "格式錯誤")
+    private String prodKind;
+    @NotEmpty
+    @Pattern(regexp = "[?=[A-Z]]{3}",message = "格式錯誤")
+    private String prodCcy;
     @NotEmpty
     private String prodName;
     @NotEmpty

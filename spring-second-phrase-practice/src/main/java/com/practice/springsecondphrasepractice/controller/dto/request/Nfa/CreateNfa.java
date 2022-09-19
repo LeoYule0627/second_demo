@@ -1,4 +1,4 @@
-package com.practice.springsecondphrasepractice.controller.dto.request;
+package com.practice.springsecondphrasepractice.controller.dto.request.Nfa;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -12,18 +12,18 @@ import javax.validation.constraints.Pattern;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class UpdateNfa {
+public class CreateNfa {
     @NotEmpty
     private String subject;
     @NotEmpty
     private String content;
     @NotEmpty
-    @Pattern(regexp = "^[?=N|Y]",message = "格式錯誤")
+    @Pattern(regexp = "^[?=N|Y]", message = "格式錯誤")
     private String enable;
     @NotEmpty
-    @Pattern(regexp = "^[?=\\d]{8}",message = "格式錯誤")
+    @Pattern(regexp = "^[?=\\d]{8}", message = "格式錯誤")
     private String startDate;
     @NotEmpty
-    @Pattern(regexp = "^[?=\\d]{8}",message = "格式錯誤")
+    @Pattern(regexp = "^[?=\\d]{8}", message = "格式錯誤")
     private String endDate;
 }

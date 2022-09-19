@@ -1,7 +1,7 @@
 package com.practice.springsecondphrasepractice.controller;
 
-import com.practice.springsecondphrasepractice.controller.dto.request.CreateDate;
-import com.practice.springsecondphrasepractice.controller.dto.request.UpdateDate;
+import com.practice.springsecondphrasepractice.controller.dto.request.Date.CreateDate;
+import com.practice.springsecondphrasepractice.controller.dto.request.Date.UpdateDate;
 import com.practice.springsecondphrasepractice.exception.DataNotFoundException;
 import com.practice.springsecondphrasepractice.exception.ParamInvalidException;
 import com.practice.springsecondphrasepractice.model.Bud;
