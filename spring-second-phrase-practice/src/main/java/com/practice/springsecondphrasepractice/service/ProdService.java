@@ -174,7 +174,7 @@ public class ProdService {
             deleteProd.setProdEnable(request.getProdEnable());
             deleteProd.setProdUTime(LocalDateTime.now());
             this.prodRepository.save(deleteProd);
-            response.put("message", "異動成功");
+            response.put("message", "註銷成功");
             return response;
         } catch (Exception e) {
             if (e instanceof ParamInvalidException) {

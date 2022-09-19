@@ -121,7 +121,7 @@ public class BudController {
     }
 
     @PutMapping("/{budYmd}")
-    public Map updateDateType(
+    public Map deleteDateType(
             @PathVariable
             @NotEmpty
             @Pattern(regexp = "^[?=\\d]{8}", message = "格式錯誤")
