@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Service
 public class BudService {
@@ -27,7 +26,7 @@ public class BudService {
             }
             return response;
         } catch (Exception e) {
-            if(e instanceof DataNotFoundException){
+            if (e instanceof DataNotFoundException) {
                 throw e;
             }
             throw new Exception();
@@ -42,7 +41,7 @@ public class BudService {
             }
             return response;
         } catch (Exception e) {
-            if(e instanceof DataNotFoundException){
+            if (e instanceof DataNotFoundException) {
                 throw e;
             }
             throw new Exception();
@@ -58,7 +57,7 @@ public class BudService {
             }
             return response;
         } catch (Exception e) {
-            if(e instanceof DataNotFoundException){
+            if (e instanceof DataNotFoundException) {
                 throw e;
             }
             throw new Exception();
@@ -66,14 +65,14 @@ public class BudService {
     }
 
     public List<Bud> getYearDate(String year) throws Exception {
-        try{
-            List<Bud> response = this.budRepository.findByBudYmdStartingWithAndBudType(year,"Y");
+        try {
+            List<Bud> response = this.budRepository.findByBudYmdStartingWithAndBudType(year, "Y");
             if (response.isEmpty()) {
                 throw new DataNotFoundException("資料不存在");
             }
             return response;
-        }catch (Exception e){
-            if(e instanceof DataNotFoundException){
+        } catch (Exception e) {
+            if (e instanceof DataNotFoundException) {
                 throw e;
             }
             throw new Exception();
@@ -81,19 +80,19 @@ public class BudService {
     }
 
     public Map getBeforeAndAfter(String searchDate) throws Exception {
-        try{
-            List<Bud> budPrevYmd = this.budRepository.findByBudYmdLessThanAndBudTypeOrderByBudYmdDesc(searchDate,"Y");
-            List<Bud> budNextYmd = this.budRepository.findByBudYmdGreaterThanAndBudTypeOrderByBudYmdAsc(searchDate,"Y");
+        try {
+            List<Bud> budPrevYmd = this.budRepository.findByBudYmdLessThanAndBudTypeOrderByBudYmdDesc(searchDate, "Y");
+            List<Bud> budNextYmd = this.budRepository.findByBudYmdGreaterThanAndBudTypeOrderByBudYmdAsc(searchDate, "Y");
             if (budPrevYmd == null || budNextYmd == null) {
                 throw new DataNotFoundException("資料不存在");
             }
             LinkedHashMap response = new LinkedHashMap();
             response.put("budYmd", searchDate);
-            response.put("budPrevYmd", budPrevYmd.get(0).getBudYmd());
-            response.put("budNextYmd", budNextYmd.get(0).getBudYmd());
+            response.put("budPrevYmd", (budPrevYmd.size() != 0) ? budPrevYmd.get(0).getBudYmd() : "無");
+            response.put("budNextYmd", (budNextYmd.size() != 0) ? budNextYmd.get(0).getBudYmd() : "無");
             return response;
-        }catch (Exception e){
-            if(e instanceof DataNotFoundException){
+        } catch (Exception e) {
+            if (e instanceof DataNotFoundException) {
                 throw e;
             }
             throw new Exception();
@@ -102,7 +101,7 @@ public class BudService {
     }
 
     public Map createDate(CreateDate request) throws Exception {
-        try{
+        try {
             Map response = new HashMap<>();
             Bud check = this.budRepository.findByBudYmd(request.getBudYmd());
             if (check == null) {
@@ -117,8 +116,8 @@ public class BudService {
             List<String> message = new ArrayList<>();
             message.add("資料已存在");
             throw new ParamInvalidException(message);
-        }catch (Exception e){
-            if(e instanceof ParamInvalidException){
+        } catch (Exception e) {
+            if (e instanceof ParamInvalidException) {
                 throw e;
             }
             throw new Exception();
@@ -126,7 +125,7 @@ public class BudService {
     }
 
     public Map updateDateType(String budYmd, UpdateDate request) throws Exception {
-        try{
+        try {
             Map response = new HashMap<>();
             Bud updateBud = this.budRepository.findByBudYmd(budYmd);
             if (updateBud == null) {
@@ -139,8 +138,8 @@ public class BudService {
             this.budRepository.save(updateBud);
             response.put("message", "異動成功");
             return response;
-        }catch (Exception e){
-            if(e instanceof ParamInvalidException){
+        } catch (Exception e) {
+            if (e instanceof ParamInvalidException) {
                 throw e;
             }
             throw new Exception();

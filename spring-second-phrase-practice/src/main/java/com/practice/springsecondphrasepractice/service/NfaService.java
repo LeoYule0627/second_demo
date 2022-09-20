@@ -70,15 +70,23 @@ public class NfaService {
             List<Nfa> nfaList = new ArrayList<>();
             if (subject != null) {
                 nfaList = this.nfaRepository.findByNfaSubjectContaining(subject);
-            }
-
-            if (startDate != null && endDate == null) {
-                nfaList = this.nfaRepository.findByNfaSTime(startDate);
-            } else if (startDate == null && endDate != null) {
-                nfaList = this.nfaRepository.findByNfaETime(endDate);
-            } else if (startDate != null && endDate != null) {
-                nfaList = this.nfaRepository.findByNfaSTime(startDate);
-                nfaList = nfaList.stream().filter(s -> s.getNfaETime().equals(endDate)).collect(Collectors.toList());
+                if (startDate != null && endDate == null) {
+                    nfaList = nfaList.stream().filter(s -> s.getNfaSTime().equals(startDate)).collect(Collectors.toList());
+                } else if (startDate == null && endDate != null) {
+                    nfaList = nfaList.stream().filter(s -> s.getNfaETime().equals(endDate)).collect(Collectors.toList());
+                } else if (startDate != null && endDate != null) {
+                    nfaList = nfaList.stream().filter(s -> s.getNfaSTime().equals(startDate)).collect(Collectors.toList());
+                    nfaList = nfaList.stream().filter(s -> s.getNfaETime().equals(endDate)).collect(Collectors.toList());
+                }
+            } else {
+                if (startDate != null && endDate == null) {
+                    nfaList = this.nfaRepository.findByNfaSTime(startDate);
+                } else if (startDate == null && endDate != null) {
+                    nfaList = this.nfaRepository.findByNfaETime(endDate);
+                } else if (startDate != null && endDate != null) {
+                    nfaList = this.nfaRepository.findByNfaSTime(startDate);
+                    nfaList = nfaList.stream().filter(s -> s.getNfaETime().equals(endDate)).collect(Collectors.toList());
+                }
             }
             nfaList = nfaList.stream().filter(s -> s.getNfaEnable().equals("Y")).collect(Collectors.toList());
             if (nfaList.isEmpty()) {
