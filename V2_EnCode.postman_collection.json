@@ -1,0 +1,136 @@
+{
+	"info": {
+		"_postman_id": "28772c97-2fca-4ce0-ad8a-56a1c770fb8f",
+		"name": "V2_EnCode",
+		"description": "JAVA培訓班_第二階段實作_電文加解密",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "22480602"
+	},
+	"item": [
+		{
+			"name": "AesECB_EnCode",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"request\": \"AES_ECB_Encode\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v2/encode/aes/ecb",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v2",
+						"encode",
+						"aes",
+						"ecb"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "AesECB_DeCode",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"request\": \"LxZiRoFfOMSPXqyFCBtXczoGPvH2rLXKfTjeQJ7VZ1qBBMn/+V9iC8BSvzGQbXUd\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/api/v2/decode/aes/ecb",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v2",
+						"decode",
+						"aes",
+						"ecb"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "AesCBC_EnCode",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"request\": \"AES_CBC_EnCode\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/api/v2/encode/aes/cbc",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v2",
+						"encode",
+						"aes",
+						"cbc"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "AecCBC_DeCode",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"request\": \"POgHZU3uaZtH6s372D8d1Q\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/api/v2/decode/aes/cbc",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v2",
+						"decode",
+						"aes",
+						"cbc"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

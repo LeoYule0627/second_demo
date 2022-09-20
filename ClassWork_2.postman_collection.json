@@ -1,0 +1,496 @@
+{
+	"info": {
+		"_postman_id": "e5b5ad93-5937-4718-a297-40731cdb24a4",
+		"name": "ClassWork_2",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "22480602"
+	},
+	"item": [
+		{
+			"name": "Bud",
+			"item": [
+				{
+					"name": "getDate",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/bud",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"bud"
+							],
+							"query": [
+								{
+									"key": "startDate",
+									"value": "20220101",
+									"disabled": true
+								},
+								{
+									"key": "endDate",
+									"value": "20220110",
+									"disabled": true
+								},
+								{
+									"key": "year",
+									"value": "2022",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getOneDate",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/bud/:budYmd",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"bud",
+								":budYmd"
+							],
+							"variable": [
+								{
+									"key": "budYmd",
+									"value": "20220101"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getBusiness",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/bud/business/:budYmd",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"bud",
+								"business",
+								":budYmd"
+							],
+							"variable": [
+								{
+									"key": "budYmd",
+									"value": "20220101"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "add Date",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"budYmd\": \"20230101\",\r\n    \"budType\": \"Y\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/bud",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"bud"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update DateType",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"budType\": \"N\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/bud/:budYmd",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"bud",
+								":budYmd"
+							],
+							"variable": [
+								{
+									"key": "budYmd",
+									"value": "20230101"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Prod",
+			"item": [
+				{
+					"name": "getProd",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/prod",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"prod"
+							],
+							"query": [
+								{
+									"key": "kind",
+									"value": "EAT",
+									"description": "USE or EAT",
+									"disabled": true
+								},
+								{
+									"key": "ccy",
+									"value": "JPN",
+									"description": "JPN, TWD, USD, THB",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getOneProd",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/prod/:pordId",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"prod",
+								":pordId"
+							],
+							"variable": [
+								{
+									"key": "pordId",
+									"value": "USE_TWD"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "add Prod",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"prodKind\" : \"USE\",\r\n    \"prodName\" : \"電腦\",\r\n    \"prodEname\" : \"pc\",\r\n    \"prodCcy\" : \"EUR\",\r\n    \"prodEnable\" : \"Y\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/prod",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"prod"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update Prod",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"prodName\" : \"筆電\",\r\n    \"prodEname\" : \"nb\",\r\n    \"prodEnable\" : \"Y\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/prod/:pordId",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"prod",
+								":pordId"
+							],
+							"variable": [
+								{
+									"key": "pordId",
+									"value": "USE_EUR"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete Prod",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"prodEnable\" : \"N\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/prod/:pordId",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"prod",
+								":pordId"
+							],
+							"variable": [
+								{
+									"key": "pordId",
+									"value": "USE_EUR"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Nfa",
+			"item": [
+				{
+					"name": "getNfa",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/nfa",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"nfa"
+							],
+							"query": [
+								{
+									"key": "subject",
+									"value": "專案",
+									"disabled": true
+								},
+								{
+									"key": "startDate",
+									"value": "20220902",
+									"disabled": true
+								},
+								{
+									"key": "endDate",
+									"value": "20220930",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "add Nfa",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"subject\": \"測試公告\",\r\n    \"content\": \"測試公告內容\",\r\n    \"enable\": \"Y\",\r\n    \"startDate\": \"20220911\",\r\n    \"endDate\": \"20220918\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/nfa",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"nfa"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update Nfa",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"subject\":\"更新測試公告\",\r\n    \"content\":\"更新測試公告內容\",\r\n    \"enable\":\"Y\",\r\n    \"startDate\": \"20220911\",\r\n    \"endDate\": \"20220918\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/nfa/:nfaUuid",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"nfa",
+								":nfaUuid"
+							],
+							"variable": [
+								{
+									"key": "nfaUuid",
+									"value": "20220911142500123"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete Nfa",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"enable\":\"N\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/nfa/:nfaUuid",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"nfa",
+								":nfaUuid"
+							],
+							"variable": [
+								{
+									"key": "nfaUuid",
+									"value": "20220911142500123"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
