@@ -8,6 +8,7 @@ import com.practice.springsecondphrasepractice.model.Bud;
 import com.practice.springsecondphrasepractice.service.BudService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -61,6 +62,7 @@ public class BudController {
             }
             return response;
         } catch (Exception e){
+            System.out.println(e);
             if(e instanceof DataNotFoundException){
                 throw e;
             }
@@ -82,6 +84,9 @@ public class BudController {
             Bud response = this.budService.getOneDate(budYmd);
             return response;
         }catch (Exception e){
+            if (e instanceof MissingServletRequestParameterException) {
+                throw e;
+            }
             if(e instanceof DataNotFoundException){
                 throw e;
             }
@@ -92,6 +97,7 @@ public class BudController {
     @GetMapping("/business/{budYmd}")
     public Map getBeforeAndAfter(
             @PathVariable
+            @NotEmpty
             @Pattern(regexp = "^[(?=\\d)]{8}", message = "日期 格式錯誤")
             String budYmd
     ) throws Exception {
@@ -99,6 +105,9 @@ public class BudController {
             Map response = this.budService.getBeforeAndAfter(budYmd);
             return response;
         }catch (Exception e){
+            if (e instanceof MissingServletRequestParameterException) {
+                throw e;
+            }
             if(e instanceof DataNotFoundException){
                 throw e;
             }
@@ -124,13 +133,16 @@ public class BudController {
     public Map deleteDateType(
             @PathVariable
             @NotEmpty
-            @Pattern(regexp = "^[?=\\d]{8}", message = "格式錯誤")
+            @Pattern(regexp = "^[?=\\d]{8}", message = "日期 格式錯誤")
             String budYmd,
             @RequestBody @Valid UpdateDate updateDate) throws Exception {
         try{
             Map response = this.budService.updateDateType(budYmd, updateDate);
             return response;
         }catch (Exception e){
+            if (e instanceof MissingServletRequestParameterException) {
+                throw e;
+            }
             if(e instanceof ParamInvalidException){
                 throw e;
             }

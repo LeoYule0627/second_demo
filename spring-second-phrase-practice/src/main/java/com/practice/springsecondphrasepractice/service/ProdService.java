@@ -22,8 +22,8 @@ public class ProdService {
 
     public List<LinkedHashMap> loading(List<Prod> prodList) {
         List resultList = new ArrayList();
-        LinkedHashMap prodMap = new LinkedHashMap();
         for (Prod prod : prodList) {
+            LinkedHashMap prodMap = new LinkedHashMap();
             prodMap.put("prodId", prod.getProdId());
             prodMap.put("prodKind", prod.getProdKind());
             prodMap.put("prodName", prod.getProdName());

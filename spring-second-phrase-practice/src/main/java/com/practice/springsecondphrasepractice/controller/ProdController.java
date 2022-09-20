@@ -125,7 +125,7 @@ public class ProdController {
             @NotEmpty
             @Pattern(regexp = "^[?=[A-Z]]{3}+_+[?=[A-Z]]{3}", message = "prodId 格式錯誤")
             String prodId,
-            @RequestBody @Valid DeleteProd deleteProd) throws Exception {
+            @RequestBody  @Valid DeleteProd deleteProd) throws Exception {
         try {
             Map response = this.prodService.deleteProdEnable(prodId, deleteProd);
             return response;

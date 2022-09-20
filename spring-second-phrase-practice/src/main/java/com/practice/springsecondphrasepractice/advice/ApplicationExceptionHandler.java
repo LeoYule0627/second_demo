@@ -71,8 +71,15 @@ public class ApplicationExceptionHandler {
     public ResponseEntity<ErrorResponse> handleConstraintViolation(
             ConstraintViolationException ex
     ) {
-        String errMsg = ex.getMessage().split(":")[1];
-        ErrorResponse errorResponse = new ErrorResponse(ActionError.VALIDATE.getMsg(), errMsg);
+        String[] errMsg = ex.getMessage().split(",|:");
+        String msg = new String();
+        for (int i = 0; i < errMsg.length; i++) {
+            if (i % 2 != 0) {
+                msg = msg.concat(errMsg[i]).concat(",");
+                System.out.println(msg);
+            }
+        }
+        ErrorResponse errorResponse = new ErrorResponse(ActionError.VALIDATE.getMsg(), msg);
         return ResponseEntity.badRequest().body(errorResponse);
     }
 
@@ -83,7 +90,6 @@ public class ApplicationExceptionHandler {
         log.error("Unknown error occurred", ex);
         return ResponseEntity.internalServerError().body(new ErrorResponse(ActionError.SYSTEM.getMsg(), ex.getMessage()));
     }
-
 
 
 }
