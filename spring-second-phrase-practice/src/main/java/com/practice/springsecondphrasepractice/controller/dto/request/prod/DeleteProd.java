@@ -1,4 +1,4 @@
-package com.practice.springsecondphrasepractice.controller.dto.request.Date;
+package com.practice.springsecondphrasepractice.controller.dto.request.prod;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -10,10 +10,10 @@ import javax.validation.constraints.Pattern;
 
 @Getter
 @Setter
-@NoArgsConstructor
 @AllArgsConstructor
-public class UpdateDate {
+@NoArgsConstructor
+public class DeleteProd {
     @NotEmpty
-    @Pattern(regexp = "^[?=N|Y]",message = "格式錯誤")
-    private String budType;
+    @Pattern(regexp = "[?=Y|N]",message = "格式錯誤")
+    private String prodEnable;
 }

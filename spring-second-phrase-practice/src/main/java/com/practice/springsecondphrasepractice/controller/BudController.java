@@ -1,10 +1,12 @@
 package com.practice.springsecondphrasepractice.controller;
 
-import com.practice.springsecondphrasepractice.controller.dto.request.Date.CreateDate;
-import com.practice.springsecondphrasepractice.controller.dto.request.Date.UpdateDate;
+import com.practice.springsecondphrasepractice.controller.dto.request.bud.CreateBud;
+import com.practice.springsecondphrasepractice.controller.dto.request.bud.UpdateBud;
+import com.practice.springsecondphrasepractice.controller.dto.response.bud.BudRange;
+import com.practice.springsecondphrasepractice.controller.dto.response.bud.BudStatus;
 import com.practice.springsecondphrasepractice.exception.DataNotFoundException;
 import com.practice.springsecondphrasepractice.exception.ParamInvalidException;
-import com.practice.springsecondphrasepractice.model.Bud;
+import com.practice.springsecondphrasepractice.model.entity.Bud;
 import com.practice.springsecondphrasepractice.service.BudService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
@@ -16,7 +18,6 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/api/v1/bud")
@@ -95,14 +96,14 @@ public class BudController {
     }
 
     @GetMapping("/business/{budYmd}")
-    public Map getBeforeAndAfter(
+    public BudRange getBeforeAndAfter(
             @PathVariable
             @NotEmpty
             @Pattern(regexp = "^[(?=\\d)]{8}", message = "日期 格式錯誤")
             String budYmd
     ) throws Exception {
         try{
-            Map response = this.budService.getBeforeAndAfter(budYmd);
+            BudRange response = this.budService.getBeforeAndAfter(budYmd);
             return response;
         }catch (Exception e){
             if (e instanceof MissingServletRequestParameterException) {
@@ -117,9 +118,9 @@ public class BudController {
 
 
     @PostMapping()
-    public Map createDate(@RequestBody @Valid CreateDate createDate) throws Exception {
+    public BudStatus createDate(@RequestBody @Valid CreateBud createBud) throws Exception {
         try{
-            Map response = this.budService.createDate(createDate);
+            BudStatus response = this.budService.createDate(createBud);
             return response;
         }catch (Exception e){
             if(e instanceof ParamInvalidException){
@@ -130,14 +131,14 @@ public class BudController {
     }
 
     @PutMapping("/{budYmd}")
-    public Map deleteDateType(
+    public BudStatus deleteDateType(
             @PathVariable
             @NotEmpty
             @Pattern(regexp = "^[?=\\d]{8}", message = "日期 格式錯誤")
             String budYmd,
-            @RequestBody @Valid UpdateDate updateDate) throws Exception {
+            @RequestBody @Valid UpdateBud updateBud) throws Exception {
         try{
-            Map response = this.budService.updateDateType(budYmd, updateDate);
+            BudStatus response = this.budService.updateDateType(budYmd, updateBud);
             return response;
         }catch (Exception e){
             if (e instanceof MissingServletRequestParameterException) {

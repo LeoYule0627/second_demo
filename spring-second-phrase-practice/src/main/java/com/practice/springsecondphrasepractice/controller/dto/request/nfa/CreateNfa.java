@@ -1,4 +1,4 @@
-package com.practice.springsecondphrasepractice.controller.dto.request.Nfa;
+package com.practice.springsecondphrasepractice.controller.dto.request.nfa;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

@@ -1,8 +1,9 @@
 package com.practice.springsecondphrasepractice.controller;
 
-import com.practice.springsecondphrasepractice.controller.dto.request.Prod.CreateProd;
-import com.practice.springsecondphrasepractice.controller.dto.request.Prod.DeleteProd;
-import com.practice.springsecondphrasepractice.controller.dto.request.Prod.UpdateProd;
+import com.practice.springsecondphrasepractice.controller.dto.request.prod.CreateProd;
+import com.practice.springsecondphrasepractice.controller.dto.request.prod.DeleteProd;
+import com.practice.springsecondphrasepractice.controller.dto.request.prod.UpdateProd;
+import com.practice.springsecondphrasepractice.controller.dto.response.prod.ProdStatus;
 import com.practice.springsecondphrasepractice.exception.DataNotFoundException;
 import com.practice.springsecondphrasepractice.exception.ParamInvalidException;
 import com.practice.springsecondphrasepractice.service.ProdService;
@@ -16,7 +17,6 @@ import javax.validation.constraints.Pattern;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/api/v1/prod")
@@ -89,9 +89,9 @@ public class ProdController {
     }
 
     @PostMapping()
-    public Map createProd(@RequestBody @Valid CreateProd createProd) throws Exception{
+    public ProdStatus createProd(@RequestBody @Valid CreateProd createProd) throws Exception{
         try{
-            Map response = this.prodService.createProd(createProd);
+            ProdStatus response = this.prodService.createProd(createProd);
             return response;
         }catch (Exception e){
             if(e instanceof ParamInvalidException){
@@ -102,14 +102,14 @@ public class ProdController {
     }
 
     @PutMapping("/{prodId}")
-    public Map updateProdEnable(
+    public ProdStatus updateProdEnable(
             @PathVariable
             @NotEmpty
             @Pattern(regexp = "^[?=[A-Z]]{3}+_+[?=[A-Z]]{3}", message = "prodId 格式錯誤")
             String prodId,
             @RequestBody @Valid UpdateProd updateProd) throws Exception{
         try{
-            Map response = this.prodService.updateProdEnable(prodId, updateProd);
+            ProdStatus response = this.prodService.updateProdEnable(prodId, updateProd);
             return response;
         }catch (Exception e){
             if(e instanceof ParamInvalidException){
@@ -120,14 +120,14 @@ public class ProdController {
     }
 
     @PostMapping("/{prodId}")
-    public Map deleteProdEnable(
+    public ProdStatus deleteProdEnable(
             @PathVariable
             @NotEmpty
             @Pattern(regexp = "^[?=[A-Z]]{3}+_+[?=[A-Z]]{3}", message = "prodId 格式錯誤")
             String prodId,
             @RequestBody  @Valid DeleteProd deleteProd) throws Exception {
         try {
-            Map response = this.prodService.deleteProdEnable(prodId, deleteProd);
+            ProdStatus response = this.prodService.deleteProdEnable(prodId, deleteProd);
             return response;
         } catch (Exception e) {
             if (e instanceof ParamInvalidException) {

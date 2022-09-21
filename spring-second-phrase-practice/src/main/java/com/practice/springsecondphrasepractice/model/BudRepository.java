@@ -1,5 +1,6 @@
 package com.practice.springsecondphrasepractice.model;
 
+import com.practice.springsecondphrasepractice.model.entity.Bud;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

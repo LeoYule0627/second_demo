@@ -1,10 +1,12 @@
 package com.practice.springsecondphrasepractice.service;
 
-import com.practice.springsecondphrasepractice.controller.dto.request.Date.CreateDate;
-import com.practice.springsecondphrasepractice.controller.dto.request.Date.UpdateDate;
+import com.practice.springsecondphrasepractice.controller.dto.request.bud.CreateBud;
+import com.practice.springsecondphrasepractice.controller.dto.request.bud.UpdateBud;
+import com.practice.springsecondphrasepractice.controller.dto.response.bud.BudRange;
+import com.practice.springsecondphrasepractice.controller.dto.response.bud.BudStatus;
 import com.practice.springsecondphrasepractice.exception.DataNotFoundException;
 import com.practice.springsecondphrasepractice.exception.ParamInvalidException;
-import com.practice.springsecondphrasepractice.model.Bud;
+import com.practice.springsecondphrasepractice.model.entity.Bud;
 import com.practice.springsecondphrasepractice.model.BudRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -79,18 +81,18 @@ public class BudService {
         }
     }
 
-    public Map getBeforeAndAfter(String searchDate) throws Exception {
+    public BudRange getBeforeAndAfter(String searchDate) throws Exception {
         try {
             List<Bud> budPrevYmd = this.budRepository.findByBudYmdLessThanAndBudTypeOrderByBudYmdDesc(searchDate, "Y");
             List<Bud> budNextYmd = this.budRepository.findByBudYmdGreaterThanAndBudTypeOrderByBudYmdAsc(searchDate, "Y");
             if (budPrevYmd == null || budNextYmd == null) {
                 throw new DataNotFoundException("資料不存在");
             }
-            LinkedHashMap response = new LinkedHashMap();
-            response.put("budYmd", searchDate);
-            response.put("budPrevYmd", (budPrevYmd.size() != 0) ? budPrevYmd.get(0).getBudYmd() : "無");
-            response.put("budNextYmd", (budNextYmd.size() != 0) ? budNextYmd.get(0).getBudYmd() : "無");
-            return response;
+            BudRange budRange = new BudRange();
+            budRange.setBudYmd(searchDate);
+            budRange.setBudPrevYmd((budPrevYmd.size() != 0) ? budPrevYmd.get(0).getBudYmd() : "無");
+            budRange.setBudNextYmd((budNextYmd.size() != 0) ? budNextYmd.get(0).getBudYmd() : "無");
+            return budRange;
         } catch (Exception e) {
             if (e instanceof DataNotFoundException) {
                 throw e;
@@ -100,9 +102,8 @@ public class BudService {
 
     }
 
-    public Map createDate(CreateDate request) throws Exception {
+    public BudStatus createDate(CreateBud request) throws Exception {
         try {
-            Map response = new HashMap<>();
             Bud check = this.budRepository.findByBudYmd(request.getBudYmd());
             if (check == null) {
                 Bud createBud = new Bud();
@@ -110,8 +111,7 @@ public class BudService {
                 createBud.setBudType(request.getBudType());
                 createBud.setBudUTime(LocalDateTime.now());
                 this.budRepository.save(createBud);
-                response.put("message", "新增成功");
-                return response;
+                return new BudStatus("新增成功");
             }
             List<String> message = new ArrayList<>();
             message.add("資料已存在");
@@ -124,9 +124,8 @@ public class BudService {
         }
     }
 
-    public Map updateDateType(String budYmd, UpdateDate request) throws Exception {
+    public BudStatus updateDateType(String budYmd, UpdateBud request) throws Exception {
         try {
-            Map response = new HashMap<>();
             Bud updateBud = this.budRepository.findByBudYmd(budYmd);
             if (updateBud == null) {
                 List<String> message = new ArrayList<>();
@@ -136,8 +135,7 @@ public class BudService {
             updateBud.setBudType(request.getBudType());
             updateBud.setBudUTime(LocalDateTime.now());
             this.budRepository.save(updateBud);
-            response.put("message", "異動成功");
-            return response;
+            return new BudStatus("異動成功");
         } catch (Exception e) {
             if (e instanceof ParamInvalidException) {
                 throw e;

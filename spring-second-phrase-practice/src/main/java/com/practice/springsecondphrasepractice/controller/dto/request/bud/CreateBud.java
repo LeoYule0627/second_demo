@@ -1,4 +1,4 @@
-package com.practice.springsecondphrasepractice.controller.dto.request.Prod;
+package com.practice.springsecondphrasepractice.controller.dto.request.bud;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -12,12 +12,11 @@ import javax.validation.constraints.Pattern;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class UpdateProd {
+public class CreateBud {
     @NotEmpty
-    private String prodName;
+    @Pattern(regexp = "^[?=\\d]{8}",message = "格式錯誤")
+    private String budYmd;
     @NotEmpty
-    private String prodEname;
-    @NotEmpty
-    @Pattern(regexp = "[?=Y|N]",message = "格式錯誤")
-    private String prodEnable;
+    @Pattern(regexp = "^[?=N|Y]",message = "格式錯誤")
+    private String budType;
 }

@@ -1,11 +1,12 @@
 package com.practice.springsecondphrasepractice.service;
 
-import com.practice.springsecondphrasepractice.controller.dto.request.Prod.CreateProd;
-import com.practice.springsecondphrasepractice.controller.dto.request.Prod.DeleteProd;
-import com.practice.springsecondphrasepractice.controller.dto.request.Prod.UpdateProd;
+import com.practice.springsecondphrasepractice.controller.dto.request.prod.CreateProd;
+import com.practice.springsecondphrasepractice.controller.dto.request.prod.DeleteProd;
+import com.practice.springsecondphrasepractice.controller.dto.request.prod.UpdateProd;
+import com.practice.springsecondphrasepractice.controller.dto.response.prod.ProdStatus;
 import com.practice.springsecondphrasepractice.exception.DataNotFoundException;
 import com.practice.springsecondphrasepractice.exception.ParamInvalidException;
-import com.practice.springsecondphrasepractice.model.Prod;
+import com.practice.springsecondphrasepractice.model.entity.Prod;
 import com.practice.springsecondphrasepractice.model.ProdRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -108,9 +109,8 @@ public class ProdService {
         }
     }
 
-    public Map createProd(CreateProd request) throws Exception {
+    public ProdStatus createProd(CreateProd request) throws Exception {
         try {
-            Map response = new HashMap();
             String prodId = request.getProdKind() + "_" + request.getProdCcy();
             Prod check = this.prodRepository.findByProdId(prodId);
             if (check == null) {
@@ -124,8 +124,7 @@ public class ProdService {
                 createProd.setProdITime(LocalDateTime.now());
                 createProd.setProdUTime(LocalDateTime.now());
                 this.prodRepository.save(createProd);
-                response.put("message", "新增成功");
-                return response;
+                return new ProdStatus("新增成功");
             }
             List<String> message = new ArrayList<>();
             message.add("資料已存在");
@@ -138,9 +137,8 @@ public class ProdService {
         }
     }
 
-    public Map updateProdEnable(String prodId, UpdateProd request) throws Exception {
+    public ProdStatus updateProdEnable(String prodId, UpdateProd request) throws Exception {
         try {
-            Map response = new HashMap();
             Prod updateProd = this.prodRepository.findByProdId(prodId);
             if (updateProd == null) {
                 List<String> message = new ArrayList<>();
@@ -152,8 +150,7 @@ public class ProdService {
             updateProd.setProdEname(request.getProdEname());
             updateProd.setProdUTime(LocalDateTime.now());
             this.prodRepository.save(updateProd);
-            response.put("message", "異動成功");
-            return response;
+            return new ProdStatus("異動成功");
         } catch (Exception e) {
             if (e instanceof ParamInvalidException) {
                 throw e;
@@ -162,9 +159,8 @@ public class ProdService {
         }
     }
 
-    public Map deleteProdEnable(String prodId, DeleteProd request) throws Exception {
+    public ProdStatus deleteProdEnable(String prodId, DeleteProd request) throws Exception {
         try {
-            Map response = new HashMap<>();
             Prod deleteProd = this.prodRepository.findByProdId(prodId);
             if (deleteProd == null) {
                 List<String> message = new ArrayList<>();
@@ -174,8 +170,7 @@ public class ProdService {
             deleteProd.setProdEnable(request.getProdEnable());
             deleteProd.setProdUTime(LocalDateTime.now());
             this.prodRepository.save(deleteProd);
-            response.put("message", "註銷成功");
-            return response;
+            return new ProdStatus("註銷成功");
         } catch (Exception e) {
             if (e instanceof ParamInvalidException) {
                 throw e;

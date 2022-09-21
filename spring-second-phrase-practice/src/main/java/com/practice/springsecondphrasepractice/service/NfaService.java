@@ -1,11 +1,13 @@
 package com.practice.springsecondphrasepractice.service;
 
-import com.practice.springsecondphrasepractice.controller.dto.request.Nfa.CreateNfa;
-import com.practice.springsecondphrasepractice.controller.dto.request.Nfa.DeleteNfa;
-import com.practice.springsecondphrasepractice.controller.dto.request.Nfa.UpdateNfa;
+import com.practice.springsecondphrasepractice.controller.dto.request.nfa.CreateNfa;
+import com.practice.springsecondphrasepractice.controller.dto.request.nfa.DeleteNfa;
+import com.practice.springsecondphrasepractice.controller.dto.request.nfa.UpdateNfa;
+import com.practice.springsecondphrasepractice.controller.dto.response.nfa.NfaDetail;
+import com.practice.springsecondphrasepractice.controller.dto.response.nfa.NfaStatus;
 import com.practice.springsecondphrasepractice.exception.DataNotFoundException;
 import com.practice.springsecondphrasepractice.exception.ParamInvalidException;
-import com.practice.springsecondphrasepractice.model.Nfa;
+import com.practice.springsecondphrasepractice.model.entity.Nfa;
 import com.practice.springsecondphrasepractice.model.NfaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,43 +21,28 @@ public class NfaService {
     @Autowired
     NfaRepository nfaRepository;
 
-    public List<LinkedHashMap> allFormat(List<Nfa> nfaList) {
+    public List<NfaDetail> loading(List<Nfa> nfaList) {
         List resultList = new ArrayList<>();
         for (Nfa nfa : nfaList) {
-            LinkedHashMap nfaMap = new LinkedHashMap<>();
-            nfaMap.put("nfaUuid", nfa.getNfaUuid());
-            nfaMap.put("nfaSubject", nfa.getNfaSubject());
-            nfaMap.put("nfaContent", nfa.getNfaContent());
-            nfaMap.put("nfaEnable", nfa.getNfaEnable());
-            nfaMap.put("nfaUTime", nfa.getNfaUTime());
-            resultList.add(nfaMap);
+            NfaDetail response = new NfaDetail();
+            response.setUuid(nfa.getNfaUuid());
+            response.setSubject(nfa.getNfaSubject());
+            response.setContent(nfa.getNfaContent());
+            response.setEnable(nfa.getNfaEnable());
+            response.setCreateTime(nfa.getNfaUTime());
+            resultList.add(response);
         }
         return resultList;
     }
 
-    public List<LinkedHashMap> conditionFormat(List<Nfa> nfaList) {
-        List resultList = new ArrayList<>();
-        for (Nfa nfa : nfaList) {
-            LinkedHashMap nfaMap = new LinkedHashMap<>();
-            nfaMap.put("uuid", nfa.getNfaUuid());
-            nfaMap.put("subject", nfa.getNfaSubject());
-            nfaMap.put("content", nfa.getNfaContent());
-            nfaMap.put("enable", nfa.getNfaEnable());
-            nfaMap.put("createTime", nfa.getNfaUTime());
-            resultList.add(nfaMap);
-        }
-        return resultList;
-    }
-
-
-    public List<LinkedHashMap> getAllNfa() throws Exception {
+    public List<NfaDetail> getAllNfa() throws Exception {
         try {
             List<Nfa> nfaList = this.nfaRepository.findAll();
             if (nfaList.isEmpty()) {
                 throw new DataNotFoundException("資料不存在");
             }
             nfaList = nfaList.stream().filter(s -> s.getNfaEnable().equals("Y")).collect(Collectors.toList());
-            List<LinkedHashMap> response = allFormat(nfaList);
+            List<NfaDetail> response = loading(nfaList);
             return response;
         } catch (Exception e) {
             if (e instanceof DataNotFoundException) {
@@ -65,7 +52,7 @@ public class NfaService {
         }
     }
 
-    public List<LinkedHashMap> getNfaRange(String subject, String startDate, String endDate) throws Exception {
+    public List<NfaDetail> getNfaRange(String subject, String startDate, String endDate) throws Exception {
         try {
             List<Nfa> nfaList = new ArrayList<>();
             if (subject != null) {
@@ -92,7 +79,7 @@ public class NfaService {
             if (nfaList.isEmpty()) {
                 throw new DataNotFoundException("資料不存在");
             }
-            List<LinkedHashMap> response = conditionFormat(nfaList);
+            List<NfaDetail> response = loading(nfaList);
             return response;
         } catch (Exception e) {
             if (e instanceof DataNotFoundException) {
@@ -102,9 +89,8 @@ public class NfaService {
         }
     }
 
-    public Map createNfa(CreateNfa request) throws Exception {
+    public NfaStatus createNfa(CreateNfa request) throws Exception {
         try {
-            Map response = new HashMap();
             String nfaUuid = request.getStartDate() + "142500123";
             Nfa check = this.nfaRepository.findByNfaUuid(nfaUuid);
             if (check == null) {
@@ -117,8 +103,7 @@ public class NfaService {
                 createNfa.setNfaETime(request.getEndDate());
                 createNfa.setNfaUTime(LocalDateTime.now());
                 this.nfaRepository.save(createNfa);
-                response.put("message", "新增成功");
-                return response;
+                return new NfaStatus("新增成功");
             }
             List<String> message = new ArrayList<>();
             message.add("資料已存在");
@@ -132,9 +117,8 @@ public class NfaService {
     }
 
 
-    public Map updateNfa(String nfaUuid, UpdateNfa request) throws Exception {
+    public NfaStatus updateNfa(String nfaUuid, UpdateNfa request) throws Exception {
         try {
-            Map response = new HashMap<>();
             Nfa updateNfa = this.nfaRepository.findByNfaUuid(nfaUuid);
             if (updateNfa == null) {
                 List<String> message = new ArrayList<>();
@@ -148,8 +132,7 @@ public class NfaService {
             updateNfa.setNfaETime(request.getEndDate());
             updateNfa.setNfaUTime(LocalDateTime.now());
             this.nfaRepository.save(updateNfa);
-            response.put("message", "異動成功");
-            return response;
+            return new NfaStatus("異動成功");
         } catch (Exception e) {
             if (e instanceof ParamInvalidException) {
                 throw e;
@@ -158,9 +141,8 @@ public class NfaService {
         }
     }
 
-    public Map deleteNfa(String nfaUuid, DeleteNfa request) throws Exception {
+    public NfaStatus deleteNfa(String nfaUuid, DeleteNfa request) throws Exception {
         try {
-            Map response = new HashMap<>();
             Nfa deleteNfa = this.nfaRepository.findByNfaUuid(nfaUuid);
             if (deleteNfa == null) {
                 List<String> message = new ArrayList<>();
@@ -170,8 +152,8 @@ public class NfaService {
             deleteNfa.setNfaEnable(request.getEnable());
             deleteNfa.setNfaUTime(LocalDateTime.now());
             this.nfaRepository.save(deleteNfa);
-            response.put("message", "異動成功");
-            return response;
+
+            return new NfaStatus("撤銷成功");
         } catch (Exception e) {
             if (e instanceof ParamInvalidException) {
                 throw e;

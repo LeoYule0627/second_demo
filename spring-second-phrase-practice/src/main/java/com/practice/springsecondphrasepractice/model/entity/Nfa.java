@@ -1,4 +1,4 @@
-package com.practice.springsecondphrasepractice.model;
+package com.practice.springsecondphrasepractice.model.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

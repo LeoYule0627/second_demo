@@ -1,4 +1,4 @@
-package com.practice.springsecondphrasepractice.controller.dto.request.Prod;
+package com.practice.springsecondphrasepractice.controller.dto.request.nfa;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -10,10 +10,10 @@ import javax.validation.constraints.Pattern;
 
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
-public class DeleteProd {
+@AllArgsConstructor
+public class DeleteNfa {
     @NotEmpty
-    @Pattern(regexp = "[?=Y|N]",message = "格式錯誤")
-    private String prodEnable;
+    @Pattern(regexp = "^[?=N|Y]",message = "格式錯誤")
+    private String enable;
 }

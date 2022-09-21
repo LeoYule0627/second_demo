@@ -1,4 +1,4 @@
-package com.practice.springsecondphrasepractice.controller.dto.request.Prod;
+package com.practice.springsecondphrasepractice.controller.dto.request.prod;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
